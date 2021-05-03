@@ -303,7 +303,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 
 void matrix_init_user(void) {
   #ifdef AUDIO_ENABLE
-    _delay_ms(20); // gets rid of tick
+    // wait(20); // gets rid of tick
     PLAY_SONG(start_up);
   #endif
 }
@@ -313,7 +313,7 @@ void matrix_init_user(void) {
 void play_goodbye_tone(void)
 {
   PLAY_SONG(goodbye);
-  _delay_ms(150);
+  // wait(150);
 }
 
 #endif
