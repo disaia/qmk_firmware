@@ -1,1 +1,1 @@
-# The default Preonic layout - largely based on the Planck's
+# My preonic layout, made for use with the swedish keyboard in the OS
