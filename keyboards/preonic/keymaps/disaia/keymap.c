@@ -19,9 +19,22 @@
 #include "../../rev3/rev3.h"
 #include "muse.h"
 #include "keymap_swedish.h"
+#include "rgblight.h"
+
+// Keycode shorthands
+#define DEL_ALT LALT_T(KC_DEL)
+#define SPC_LOWER LT(_LOWER, KC_SPC)
+#define BKSP_RAISE LT(_RAISE, KC_BSPC)
+#define SPC_LOWER LT(_LOWER, KC_SPC)
+#define DEL_ALTGR ALGR_T(KC_DEL)
+#define ENT_RSFT RSFT_T(KC_ENT)
+#define F_LSFT LSFT_T(KC_F)
+#define J_RSFT RSFT_T(KC_J)
+#define J_RSFT RSFT_T(KC_J)
 
 enum preonic_layers {
   _QWERTY,
+  _GAMING,
   _NUMPAD,
   _COLEMAK,
   _DVORAK,
@@ -32,6 +45,7 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
+  GAMING,
   COLEMAK,
   DVORAK,
   LOWER,
@@ -40,7 +54,28 @@ enum preonic_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Qwerty
+/* Qwerty for typing
+ * ,-----------------------------------------------------------------------------------.
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |   Å  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   Ö  |   Ä  |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  Up  |Enter |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Ctrl | GUI  | Alt  |DelAlt|    Space    |  Backspace  |DAltgr| Left | Down |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_QWERTY] = LAYOUT_preonic_2x2u(
+  GAMING,    KC_1,    KC_2,    KC_3,        KC_4,    KC_5,    KC_6,   KC_7,       KC_8,      KC_9,    KC_0,     KC_BSPC,
+  KC_TAB,    KC_Q,    KC_W,    KC_E,        KC_R,    KC_T,    KC_Y,   KC_U,       KC_I,      KC_O,    KC_P,     SE_ARNG,
+  KC_ESC,    KC_A,    KC_S,    KC_D,        F_LSFT,  KC_G,    KC_H,   J_RSFT,     KC_K,      KC_L,    SE_ODIA,  SE_ADIA,
+  KC_LSFT,   KC_Z,    KC_X,    KC_C,        KC_V,    KC_B,    KC_N,   KC_M,       SE_COMM,   SE_DOT,  KC_UP,    ENT_RSFT,
+  KC_LCTL,   KC_LGUI, KC_LALT, DEL_ALT,     SPC_LOWER,        BKSP_RAISE,         DEL_ALTGR, KC_LEFT, KC_DOWN,  KC_RGHT
+),
+
+/* Qwerty for gaming
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -53,12 +88,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Ctrl | GUI  | Alt  | Del  |    Space    |  Backspace  |   /  | Left | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
-[_QWERTY] = LAYOUT_preonic_2x2u(
-  RGB_MOD,   KC_1,    KC_2,    KC_3,                 KC_4,    KC_5,         KC_6,    KC_7,       KC_8,      KC_9,    KC_0,     KC_BSPC,
-  KC_TAB,    KC_Q,    KC_W,    KC_E,                 KC_R,    KC_T,         KC_Y,    KC_U,       KC_I,      KC_O,    KC_P,     SE_ARNG,
-  KC_ESC,    KC_A,    KC_S,    KC_D,                 KC_F,    KC_G,         KC_H,    KC_J,       KC_K,      KC_L,    SE_ODIA,  SE_ADIA,
-  KC_LSFT,   KC_Z,    KC_X,    KC_C,                 KC_V,    KC_B,         KC_N,    KC_M,       KC_COMM,   KC_DOT,  KC_UP,    KC_ENT,
-  KC_LCTL,   KC_LGUI, KC_LALT, LT(_ADJUST, KC_DEL),  LT(_LOWER, KC_SPC),   LT(_RAISE, KC_BSPC),  MT(MOD_RSFT, SE_SLSH),   KC_LEFT, KC_DOWN,  KC_RGHT
+[_GAMING] = LAYOUT_preonic_2x2u(
+  QWERTY,    KC_1,    KC_2,    KC_3,      KC_4,    KC_5,     KC_6,    KC_7,     KC_8,       KC_9,    KC_0,     KC_BSPC,
+  KC_TAB,    KC_Q,    KC_W,    KC_E,      KC_R,    KC_T,     KC_Y,    KC_U,     KC_I,       KC_O,    KC_P,     SE_ARNG,
+  KC_ESC,    KC_A,    KC_S,    KC_D,      KC_F,    KC_G,     KC_H,    KC_J,     KC_K,       KC_L,    SE_ODIA,  SE_ADIA,
+  KC_LSFT,   KC_Z,    KC_X,    KC_C,      KC_V,    KC_B,     KC_N,    KC_M,     KC_COMM,    KC_DOT,  KC_UP,    KC_ENT,
+  KC_LCTL,   KC_LGUI, KC_LALT, DEL_ALT,   KC_SPC,            KC_BSPC,           DEL_ALTGR,  KC_LEFT, KC_DOWN,  KC_RGHT
 ),
 
 /* Colemak
@@ -71,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * | Ctrl | GUI  | Alt  | Del  |    Space    |  Backspace  |   /  | Left | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_preonic_2x2u(
@@ -92,33 +127,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * | Ctrl | GUI  | Alt  | Del  |    Space    |  Backspace  |   /  | Left | Down |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_DVORAK] = LAYOUT_preonic_2x2u(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_DEL,
-  KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
-  KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,
+  KC_GRV,  KC_1,    KC_2,    KC_3,                KC_4,    KC_5,        KC_6,    KC_7,        KC_8,    KC_9,    KC_0,    KC_BSPC,
+  KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,              KC_P,    KC_Y,        KC_F,    KC_G,        KC_C,    KC_R,    KC_L,    KC_DEL,
+  KC_ESC,  KC_A,    KC_O,    KC_E,                KC_U,    KC_I,        KC_D,    KC_H,        KC_T,    KC_N,    KC_S,    KC_SLSH,
+  KC_LSFT, KC_SCLN, KC_Q,    KC_J,                KC_K,    KC_X,        KC_B,    KC_M,        KC_W,    KC_V,    KC_Z,    KC_ENT,
   KC_LCTL, KC_LCTL, KC_LALT, LT(_ADJUST, KC_DEL), LT(_LOWER, KC_BSPC),  LT(_RAISE, KC_SPC),   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
 ),
 
 /* Numpad
   * ,-----------------------------------------------------------------------------------.
-  * | Esc  |      |      | PgDn | PgUp | Home |  End |      |   /  |   *  |   -  | Del  |
+  * | Esc  |      |      | PgDn | PgUp | Home |   /  |   *  |   -  | PgDn | PgUp | Bksp |
   * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * | Tab  |      |  Up  |      |      |      |      |   7  |   8  |   9  |   +  | Bksp |
+  * | Tab  |      |  Up  |      |      |      |   7  |   8  |   9  |      |   +  | Del  |
   * |------+------+------+------+------+-------------+------+------+------+------+------|
-  * | Bksp | Left | Down | Right|      |      |      |   4  |   5  |   6  |      |  "   |
+  * | Esc  | Left | Down | Right|      |      |   4  |   5  |   6  |      |      |  "   |
   * |------+------+------+------+------+------|------+------+------+------+------+------|
-  * | Shift|      |      |      |      |      |   ,  |   1  |   2  |   3  |      | Shift|
+  * | Shift|      |      |      |      |      |   1  |   2  |   3  |      | PgUp | Shift|
   * |------+------+------+------+------+------+------+------+------+------+------+------|
-  * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise |   0  |   .  | Ctrl | Shift|
+  * | Ctrl | GUI  | Alt  | Del  |    Space    |      0      |   .  | Home | PgDn |  End |
   * `-----------------------------------------------------------------------------------'
   */
   [_NUMPAD] = LAYOUT_preonic_2x2u(
-    KC_ESC,  _______, _______,      _______,             _______, _______,      _______, KC_PSLS,    KC_PAST,   KC_PMNS,    KC_PGUP,  KC_DEL,
-    KC_TAB,  _______, _______,      _______,             _______, _______,      KC_P7,   KC_P8,      KC_P9,     _______,    KC_PPLS,  KC_BSPC,
+    KC_ESC,  _______, _______,      _______,             _______, _______,      _______, KC_PSLS,    KC_PAST,   KC_PMNS,    KC_PGUP,  KC_BSPC,
+    KC_TAB,  _______, _______,      _______,             _______, _______,      KC_P7,   KC_P8,      KC_P9,     _______,    KC_PPLS,  KC_DEL,
     KC_BSPC, _______, _______,      _______,             _______, _______,      KC_P4,   KC_P5,      KC_P6,     _______,    _______,  KC_QUOT,
     KC_LSFT, _______, _______,      _______,             _______, KC_COMM,      KC_P1,   KC_P2,      KC_P3,     _______,    KC_UP,    KC_ENT,
     KC_LCTL, KC_LALT, KC_LGUI,      LT(_ADJUST, KC_DEL), KC_SPC,                KC_P0,               KC_COMM,   KC_LEFT,    KC_DOWN,  KC_RGHT
@@ -196,6 +231,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case QWERTY:
           if (record->event.pressed) {
             set_single_persistent_default_layer(_QWERTY);
+            rgblight_mode(RGBLIGHT_MODE_STATIC_GRADIENT);
+          }
+          return false;
+          break;
+        case GAMING:
+          if (record->event.pressed) {
+            set_single_persistent_default_layer(_GAMING);
+            rgblight_mode(RGBLIGHT_MODE_STATIC_GRADIENT + 4);
           }
           return false;
           break;
