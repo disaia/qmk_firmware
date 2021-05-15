@@ -49,7 +49,8 @@ enum preonic_keycodes {
   COLEMAK,
   DVORAK,
   LOWER,
-  RAISE
+  RAISE,
+  ADJUST
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -166,7 +167,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |   ½  |   !  |   "  |   €  |   $  |   %  |   ^  |   {  |   (  |   )  |   }  |  ~   |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |   @  |   $  |  F3  |  F4  |  F5  |  F6  |   _  |   ?  |   {  |   }  |  '   |
+ * | Del  |   @  |   $  |  F3  |   \  |   (  |   )  |   _  |   ?  |   {  |   }  |  '   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   ?  |   !  | Home |Pg Up |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -174,20 +175,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_preonic_2x2u(
-  SE_HALF, KC_EXLM, SE_DQUO,    KC_HASH, KC_DLR,  KC_PERC, KC_CIRC,    KC_AMPR,     SE_LPRN,    SE_RPRN, KC_RPRN, KC_DEL,
-  SE_HALF, KC_EXLM, SE_DQUO,    SE_EURO, KC_DLR,  KC_PERC, KC_CIRC,    SE_LCBR,     SE_LPRN,    SE_RPRN, SE_RCBR, SE_TILD,
-  _______, SE_AT,   SE_DLR,     KC_F3,   KC_F4,   KC_F5,   KC_F6,      SE_UNDS,     SE_QUES,    SE_LCBR, SE_RCBR, SE_QUOT,
-  _______, KC_F7,   KC_F8,      KC_F9,   KC_F10,  KC_F11,  KC_F12,     S(KC_NUHS),  SE_QUES,    KC_EXLM, KC_PGUP, _______,
-  _______, _______, _______, _______, _______,              _______,                SE_PIPE,    KC_HOME, KC_PGDN, KC_END
+  SE_HALF, KC_EXLM, SE_DQUO,    KC_HASH, KC_DLR,  KC_PERC,  KC_CIRC,    KC_AMPR,     SE_LPRN,    SE_RPRN,  KC_RPRN, KC_DEL,
+  SE_HALF, KC_EXLM, SE_DQUO,    SE_EURO, KC_DLR,  KC_PERC,  KC_CIRC,    SE_LCBR,     SE_LPRN,    SE_RPRN,  SE_RCBR, SE_TILD,
+  _______, SE_AT,   SE_DLR,     KC_F3,   KC_F4,   SE_RPRN,  SE_RCBR,    SE_UNDS,     SE_QUES,    SE_LCBR,  SE_RCBR, SE_QUOT,
+  _______, KC_F7,   KC_F8,      KC_F9,   KC_F10,  KC_F11,   KC_F12,     S(KC_NUHS),  SE_QUES,    KC_EXLM,  KC_PGUP, _______,
+  _______, _______, _______,    _______, _______,           _______,                 SE_PIPE,    KC_HOME,  KC_PGDN, KC_END
 ),
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   @  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   <  |   [  |   ]  |   >  |  ^   |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   +  |   [  |   ]  |  *   |
+ * | Del  |  F1  |  F2  |  F3  |   /  |   {  |   }  |   -  |   +  |   [  |   ]  |  *   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / | Pg Up| Pg Dn|      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -195,11 +196,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_preonic_2x2u(
-  KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,     KC_9,    KC_0,    KC_DEL,
-  KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    SE_LABK, SE_LBRC,  SE_RBRC, SE_RABK, SE_CIRC,
-  _______,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   SE_MINS, SE_PLUS,  SE_LBRC, SE_RBRC, SE_ASTR,
-  _______,  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS,  KC_PGUP, KC_PGDN, _______,
-  _______,  _______, _______, _______, _______,          _______,          SE_BSLS, KC_VOLD, KC_VOLU,  KC_MPLY
+  KC_F1,    KC_F2,   KC_F3,   KC_F4,   KC_F5,    KC_F6,   KC_F7,   KC_F8,    KC_F9,    KC_F10,  KC_F11,   KC_F12,
+  KC_GRV,   KC_1,    KC_2,    KC_3,    KC_4,     KC_5,    KC_6,    SE_LABK,  SE_LBRC,  SE_RBRC, SE_RABK,  SE_CIRC,
+  _______,  KC_F1,   KC_F2,   KC_F3,   SE_SLSH,  KC_F5,   KC_F6,   SE_MINS,  SE_PLUS,  SE_LBRC, SE_RBRC,  SE_ASTR,
+  _______,  KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,  KC_F12,  KC_NUHS,  KC_NUBS,  KC_PGUP, KC_PGDN,  _______,
+  _______,  _______, _______, _______, _______,           _______,           SE_BSLS,  KC_VOLD, KC_VOLU,  KC_MPLY
 ),
 
 /* Adjust (Lower + Raise)
@@ -270,6 +271,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           } else {
             layer_off(_RAISE);
+            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+          }
+          return false;
+          break;
+        case ADJUST:
+          if (record->event.pressed) {
+            layer_on(_LOWER);
+            layer_on(_RAISE);
+            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+          } else {
+            layer_on(_LOWER);
+            layer_on(_RAISE);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
           return false;
