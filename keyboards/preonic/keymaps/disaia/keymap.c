@@ -73,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,    KC_Q,    KC_W,    KC_E,       KC_R,    KC_T,    KC_Y,   KC_U,       KC_I,      KC_O,    KC_P,     SE_ARNG,
   KC_ESC,    KC_A,    KC_S,    KC_D,       F_LSFT,  KC_G,    KC_H,   J_RSFT,     KC_K,      KC_L,    SE_ODIA,  SE_ADIA,
   KC_LSFT,   KC_Z,    KC_X,    KC_C,       KC_V,    KC_B,    KC_N,   KC_M,       SE_COMM,   SE_DOT,  KC_UP,    ENT_RSFT,
-  KC_LCTL,   KC_LGUI, ADJUST, DEL_ALT,     SPC_LOWER,        BKSP_RAISE,         DEL_ALTGR, KC_LEFT, KC_DOWN,  KC_RGHT
+  KC_LCTL,   KC_LGUI, MO(_ADJUST), DEL_ALT,     SPC_LOWER,        BKSP_RAISE,         DEL_ALTGR, KC_LEFT, KC_DOWN,  KC_RGHT
 ),
 
 /* Qwerty for gaming
@@ -271,18 +271,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           } else {
             layer_off(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          }
-          return false;
-          break;
-        case ADJUST:
-          if (record->event.pressed) {
-            layer_on(_LOWER);
-            layer_on(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          } else {
-            layer_on(_LOWER);
-            layer_on(_RAISE);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
           return false;
